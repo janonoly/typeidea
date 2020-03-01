@@ -1,6 +1,6 @@
 *.pyc
 *.swp
 *.sqlite3
-venv/
-.idea/
-migrations/
+/venv
+/.idea
+/migrations

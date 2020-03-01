@@ -4,7 +4,7 @@ from django.db import models
 from blog.models import Post
 
 
-class Corrunent(models.Model):
+class Comment(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
     STATUS_ITEMS = (
@@ -23,3 +23,6 @@ class Corrunent(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = "评论"
+
+    def __str__(self):
+        return self.nickname

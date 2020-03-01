@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+#Model的__str__方法返回显示内容
 class Link(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
@@ -22,6 +23,8 @@ class Link(models.Model):
     class Meta:
         verbose_name = verbose_name_plural = "友链"
 
+    def __str__(self):
+        return self.title
 
 class SideBar(models.Model):
     STATUS_SHOW = 1
@@ -49,5 +52,6 @@ class SideBar(models.Model):
     class Meta:
         verbose_name = verbose_name_plural = "侧边栏"
 
-
+    def __str__(self):
+        return self.title
 
