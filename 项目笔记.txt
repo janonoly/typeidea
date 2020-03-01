@@ -1,0 +1,6 @@
+1.创建项目typeidea
+2.拆分settings
+3.配置git .gitignore
+4.push到远程仓库
+5.编写model，创建app（python manage.py startapp blog）
+6.编写blog/models.py 文件，创建模型即表结构
