@@ -7,3 +7,4 @@
 models.ForeignKey(User, on_delete=models.CASCADE)
 User删除，级联删除，改记录也删除
 7.创建管理后台，编写admin.py
+8.1
