@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 from blog.adminforms import PostAdminForm
+from typeidea.base_admin import BaseOwnerAdmin
 from typeidea.custom_site import custom_site
 from .models import Post, Category, Tag
 
@@ -15,13 +16,10 @@ class PostInline(admin.TabularInline):
 
 # Register your models here.
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'is_nav', 'created_time', 'post_count')
     fields = ('name', 'status', 'is_nav')
     inlines = [PostInline, ]
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(CategoryAdmin, self).save_model(request, obj, form, change)
 
     def post_count(self,obj):
         return obj.post_set.count()
@@ -30,16 +28,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time')
     fields = ('name', 'status')
 
-    #obj是当前要保存的对象，form是页面提交过来的表单之后的对象
-    #change用于标志本次保存的数据是新增的还是更新的
-    #request当前请求
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(TagAdmin, self).save_model(request, obj, form, change)
+
 
 
 class CategoryOwnerFilter(admin.SimpleListFilter):
@@ -66,7 +59,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
 # actions on_bottom 动作相关的配置，是否展示在底部
 # save_on_top ：保存、编辑、编辑并新建按钮是否在顶部展示
 @admin.register(Post,site=custom_site)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm
 
 
@@ -127,13 +120,6 @@ class PostAdmin(admin.ModelAdmin):
         )
     operator.short_description = '操作'
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return  super(PostAdmin, self).save_model(request, obj, form, change)
-
-    def get_queryset(self, request):
-        qs = super(PostAdmin, self).get_queryset(request)
-        return qs.filter(owner=request.user)
 
     # class Media:
     #     css = {
