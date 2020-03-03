@@ -26,6 +26,7 @@ from blog.views import (
 )
 urlpatterns = [
     re_path(r'^$', IndexView.as_view(), name='index'),
+
     re_path(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name='category-list'),
     re_path(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag-list'),
     re_path(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post-detail'),
